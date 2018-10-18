@@ -1,8 +1,8 @@
 import React from "react";
-import styles from  "./Person.module.css";
+import styles from "./Person.module.css";
 
 const Person = props => {
-
+  const rnd = Math.random();
 
   return (
     <div className={styles.Person}>
