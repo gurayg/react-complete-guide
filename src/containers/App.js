@@ -48,7 +48,6 @@ class App extends Component {
   render() {
     let persons = null;
 
-
     if (this.state.showPersons) {
       persons = <Persons
         persons={this.state.persons}
@@ -60,6 +59,7 @@ class App extends Component {
     return (
       <div className={styles.App}>
         <Cockpit
+          appTitle={this.props.title}
           showPersons={this.state.showPersons} persons={this.state.persons}
           clicked={this.togglePersonsHandler}
         />
