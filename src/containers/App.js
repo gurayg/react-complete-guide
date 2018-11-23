@@ -4,7 +4,9 @@ import Persons from "../components/Persons/Persons";
 import Cockpit from "../components/Cockpit/Cockpit";
 // import WithClass from "../hoc/WithClass";
 import Aux from "../hoc/Auxiliary";
-import withClass from "../hoc/withClass";
+import WithClass from "../hoc/WithClass";
+
+export const AuthContext = React.createContext(false);
 class App extends PureComponent {
   constructor(props) {
     super(props);
@@ -46,7 +48,9 @@ class App extends PureComponent {
       { id: "asdf11", name: "Stephanie", age: 26 }
     ],
     otherState: "some other value",
-    showPersons: false
+    showPersons: false,
+    toggleClicked: 0,
+    authenticated: false
   };
 
   nameChangedHandler = (event, id) => {
@@ -77,8 +81,18 @@ class App extends PureComponent {
 
   togglePersonsHandler = () => {
     const doesShow = this.state.showPersons;
-    this.setState({ showPersons: !doesShow });
+    this.setState((prevState, props) => {
+      return {
+        showPersons: !doesShow,
+        toggleClicked: prevState.toggleClicked + 1
+      }
+    });
   };
+
+  loginHandler = () => {
+    this.setState({ authenticated: true })
+  }
+
 
   render() {
     console.log("[App.js] inside render()");
@@ -104,11 +118,15 @@ class App extends PureComponent {
           Show Persons
         </button>
         <Cockpit
+          title={this.props.title}
           showPersons={this.state.showPersons}
           persons={this.state.persons}
+          login={this.loginHandler}
           clicked={this.togglePersonsHandler}
+
         />
-        {persons}
+        <AuthContext.Provider value={this.state.authenticated}>{persons}</AuthContext.Provider>
+
       </Aux>
       // <WithClass classes={styles.App}>
       //   <button
@@ -130,4 +148,4 @@ class App extends PureComponent {
   }
 }
 
-export default withClass(App, styles.App);
+export default WithClass(App, styles.App);
