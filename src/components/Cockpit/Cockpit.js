@@ -1,11 +1,12 @@
-import React from 'react';
-import styles from './Cockpit.module.css'
-
-const cockpit = (props) => {
-
-    let btnClass = "";
+import React from "react";
+import styles from "./Cockpit.module.css";
+import Aux from "../../hoc/Auxiliary";
+const cockpit = props => {
+    console.log(styles);
+    let btnClass = styles.Button;
+    console.log(btnClass);
     if (props.showPersons) {
-        btnClass = styles.Red;
+        btnClass = [styles.Button, styles.Red].join(" ");
     }
 
     const classes = [];
@@ -17,13 +18,13 @@ const cockpit = (props) => {
     }
 
     return (
-        <div className={styles.Cockpit}>
-            <h1>{props.appTitle}</h1>
+        <Aux>
+            <h1>Relevant Persons</h1>
             <p className={classes.join(" ")}>This is really working!</p>
             <button className={btnClass} onClick={props.clicked}>
                 Toggle Persons
-        </button>
-        </div>
+      </button>
+        </Aux>
     );
 };
 

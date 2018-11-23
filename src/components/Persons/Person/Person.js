@@ -1,18 +1,62 @@
-import React from "react";
+import React, { Component } from "react";
 import styles from "./Person.module.css";
+// import WithClass from "../../../hoc/WithClass";
+// import WithClass from "../hoc/WithClass";
+import Aux from "../../../hoc/Auxiliary";
+import withClass from "../../../hoc/withClass";
+class Person extends Component {
+  constructor(props) {
+    super(props);
+    console.log("[Person.js] inside constructor", props);
+  }
 
-const Person = props => {
-  const rnd = Math.random();
+  componentWillMount() {
+    console.log("[Person.js] inside componentWillMount()");
+  }
 
-  return (
-    <div className={styles.Person}>
-      <p onClick={props.click}>
-        I'm {props.name} and I am {props.age} years old!
-      </p>
-      <p>{props.children}</p>
-      <input type="text" onChange={props.changed} value={props.name} />
-    </div>
-  );
-};
+  componentDidMount() {
+    console.log("[Person.js] inside componentDidMount()");
+  }
+  render() {
+    console.log("[Person.js] inside render()");
+    return (
+      <Aux>
+        <p onClick={this.props.click}>
+          I'm {this.props.name} and I am {this.props.age} years old!
+        </p>
+        <p>{this.props.children}</p>
+        <input
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+      // <WithClass classes={styles.Person}>
+      //   <p onClick={this.props.click}>
+      //     I'm {this.props.name} and I am {this.props.age} years old!
+      //   </p>
+      //   <p>{this.props.children}</p>
+      //   <input
+      //     type="text"
+      //     onChange={this.props.changed}
+      //     value={this.props.name}
+      //   />
+      // </WithClass>
+    );
 
-export default Person;
+    // return [
+    //   <p key="1" onClick={this.props.click}>
+    //     I'm {this.props.name} and I am {this.props.age} years old!
+    //   </p>,
+    //   <p key="2" >{this.props.children}</p>,
+    //   <input
+    //   key="3"
+    //     type="text"
+    //     onChange={this.props.changed}
+    //     value={this.props.name}
+    //   />
+    // ];
+  }
+}
+
+export default withClass(Person, styles.Person);

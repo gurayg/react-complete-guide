@@ -1,9 +1,44 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import styles from "./App.module.css";
 import Persons from "../components/Persons/Persons";
-import Cockpit from '../components/Cockpit/Cockpit'
+import Cockpit from "../components/Cockpit/Cockpit";
+// import WithClass from "../hoc/WithClass";
+import Aux from "../hoc/Auxiliary";
+import withClass from "../hoc/withClass";
+class App extends PureComponent {
+  constructor(props) {
+    super(props);
+    console.log("[App.js] inside constructor", props);
+  }
 
-class App extends Component {
+  componentWillMount() {
+    console.log("[App.js] inside componentWillMount()");
+  }
+
+  componentDidMount() {
+    console.log("[App.js] inside componentDidMount()");
+  }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log(
+  //     "[App.js] inside shouldComponentUpdate()",
+  //     nextProps,
+  //     nextState
+  //   );
+  //   return (
+  //     nextState.persons !== this.state.persons ||
+  //     nextState.showPersons !== this.state.showPersons
+  //   );
+  // }
+
+  componentWillUpdate(nextProps, nextState) {
+    console.log("[App.js] inside componentWillUpdate()", nextProps, nextState);
+  }
+
+  componentDidUpdate() {
+    console.log("[App.js] inside componentDidUpdate()");
+  }
+
   state = {
     persons: [
       { id: "asfa1", name: "Max", age: 28 },
@@ -46,28 +81,53 @@ class App extends Component {
   };
 
   render() {
+    console.log("[App.js] inside render()");
     let persons = null;
 
     if (this.state.showPersons) {
-      persons = <Persons
-        persons={this.state.persons}
-        clicked={this.deletePersonHandler}
-        changed={this.nameChangedHandler} />
-
+      persons = (
+        <Persons
+          persons={this.state.persons}
+          clicked={this.deletePersonHandler}
+          changed={this.nameChangedHandler}
+        />
+      );
     }
 
     return (
-      <div className={styles.App}>
+      <Aux>
+        <button
+          onClick={() => {
+            this.setState({ showPersons: true });
+          }}
+        >
+          Show Persons
+        </button>
         <Cockpit
-          appTitle={this.props.title}
-          showPersons={this.state.showPersons} persons={this.state.persons}
+          showPersons={this.state.showPersons}
+          persons={this.state.persons}
           clicked={this.togglePersonsHandler}
         />
         {persons}
-      </div>
+      </Aux>
+      // <WithClass classes={styles.App}>
+      //   <button
+      //     onClick={() => {
+      //       this.setState({ showPersons: true });
+      //     }}
+      //   >
+      //     Show Persons
+      //   </button>
+      //   <Cockpit
+      //     showPersons={this.state.showPersons}
+      //     persons={this.state.persons}
+      //     clicked={this.togglePersonsHandler}
+      //   />
+      //   {persons}
+      // </WithClass>
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }
 
-export default App;
+export default withClass(App, styles.App);
