@@ -8,7 +8,7 @@ import React, { Component } from "react";
 //   );
 // };
 
-const withClass = (WrappedComponent, className) => {
+const WithClass = (WrappedComponent, className) => {
   const WithClass = class extends Component {
     render() {
       return (
@@ -24,4 +24,4 @@ const withClass = (WrappedComponent, className) => {
   })
 };
 
-export default withClass;
+export default WithClass;

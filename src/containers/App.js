@@ -37,6 +37,22 @@ class App extends PureComponent {
     console.log("[App.js] inside componentWillUpdate()", nextProps, nextState);
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log(
+      "[App.js] inside getDerivedStateFromProps()",
+      nextProps,
+      prevState
+    );
+
+    return prevState;
+  }
+
+  getSnapshotBeforeUpdate(){
+    console.log(
+      "[App.js] inside  getSnapshotBeforeUpdate()"
+    );
+  }
+
   componentDidUpdate() {
     console.log("[App.js] inside componentDidUpdate()");
   }
@@ -85,14 +101,13 @@ class App extends PureComponent {
       return {
         showPersons: !doesShow,
         toggleClicked: prevState.toggleClicked + 1
-      }
+      };
     });
   };
 
   loginHandler = () => {
-    this.setState({ authenticated: true })
-  }
-
+    this.setState({ authenticated: true });
+  };
 
   render() {
     console.log("[App.js] inside render()");
@@ -123,10 +138,10 @@ class App extends PureComponent {
           persons={this.state.persons}
           login={this.loginHandler}
           clicked={this.togglePersonsHandler}
-
         />
-        <AuthContext.Provider value={this.state.authenticated}>{persons}</AuthContext.Provider>
-
+        <AuthContext.Provider value={this.state.authenticated}>
+          {persons}
+        </AuthContext.Provider>
       </Aux>
       // <WithClass classes={styles.App}>
       //   <button
